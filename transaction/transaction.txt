@@ -1,5 +1,6 @@
-    * Repository creation and deletion
+    * Repository creation and removal
     * Branch creation and deletion
     * Tag creation and deletion
     * Add files and commit changes
     * List commit and check detailed info about commits
+    * Add new work to be done
