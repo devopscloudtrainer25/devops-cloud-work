@@ -1,0 +1,5 @@
+4. git fetch: git fetch is used for downloading the updated changes from github remote repository branch to intermediatory branch called "origin/branch_name"
+
+command: local-main> git fetch origin main  // fetch changes from remote "main" branch to intermediatory "origin/main" branch
+         local-main> git merge origin/main  // "origin/main" changes are merged into "local main" branch
+
