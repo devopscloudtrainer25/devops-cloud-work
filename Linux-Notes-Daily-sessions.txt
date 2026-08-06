@@ -1,0 +1,1392 @@
+Overview of Linux OS
+Datacenter, Servers
+Physical and Virtual Machine 
+Hypervisor and Cloud
+Installation of Linux OS on EC2 instance
+---------------------------------------------------------------------------------------------------
+Basic Linux commands
+Filesystem
+---------------------------------------------------------------------------------------------------
+User Management 
+Delegate the sudo privileges to Regular user
+---------------------------------------------------------------------------------------------------
+Package Management:
+  * RPM 
+  * YUM 
+  * APT - Ubuntu
+---------------------------------------------------------------------------------------------------
+Backup and Restore:
+  * TAR
+  * ZIP
+  * DD
+---------------------------------------------------------------------------------------------------
+Permissions: 
+  * Change Modification
+  * Change ownership
+---------------------------------------------------------------------------------------------------
+Links: 
+  * Soft link
+  * Hard link
+---------------------------------------------------------------------------------------------------
+Automation of Jobs:
+  * AT job
+  * Crontab
+---------------------------------------------------------------------------------------------------
+Advanced Linux commands:
+   * Resources
+   * Network
+   * Service
+---------------------------------------------------------------------------------------------------
+Installation of Windows OS on EC2 instance
+How to connect Windows OS ? 
+---------------------------------------------------------------------------------------------------
+How to launch an static web Application via Linux EC2 instance?
+How to launch and connect windows machine?
+---------------------------------------------------------------------------------------------------
+SSH and SCP: (Ansible):
+   * Password connection
+   * Password less connection
+=================================================================================================
+DAY-1:
+=================================================================================================
+1. AWS Account creation: https://aws.amazon.com/free - free tier account - 6 months - $200 credits
+      * Email id: Gmail
+      * Phone number: xxxxxx - verification of account
+      * Debit/Credit card: xxxxxxxx - verification of account - Transaction of Rs.2 - Revert 2 Rs after 2 hours
+      * Pan card: xxxxxxxxx - verification of account
+-------------------------------------------------------------------------------------
+Note: Always be in single region:  38 regions 
+
+2. How to create an EC2 instance?
+     * EC2 - Elastic compute cloud - EC2 is an module which infrastructure services(compute, storage, network etc)
+     * Instance - Machine(physical server/machine, virtual server/machine, box etc)
+-----------------------------------------//
+Steps for creating EC2 instance:
+-----------------------------------------
+a. Name and tags:  Prod/Dev/Database-machine/Application-server/webserver/test etc
+b. Application and OS Images (Amazon Machine Image): OS - Windows/Linux(Ubuntu/Redhat/Amazon linux)
+c. Instance type: t3.micro - 2vcpu and 1 GB RAM
+d. Key pair (login): pem - openssh tools
+                     ppk - putty tool
+e. Network settings: Leave as it is
+f. Configure storage: 10GB HD
+-------------------------------------------------------------------------------------
+3. How to connect an EC2 instance?
+     * Openssh tools: cloud shell, command prompt/Terminal, Gitbash, MobaXterm
+     * putty 
+===========================================================================================================
+                                  Linux Administration 
+===========================================================================================================
+Overview of Linux OS
+===========================================================================================================
+Operating system is an software which runs on hardware for creating/launching/running applications.
+
+---------------------------------------------------
+Operating system versions and flavours:
+---------------------------------------------------
+Windows:  Microsoft
+  * 7.x, 8.x, 10.x, 11.x               - Desktop Operating system - Personal/Individual use - CLI and GUI
+  * 2006,2008,2012,2016,2019,2022,2025 - Server operating system  - Production/Live use     - CLI and GUI
+
+
+Linux: 
+ Redhat: RHEL - 7.x, 8.x, 9.x[stable], 10.x[latest] - Server OS - Personal/Production use - CLI(recommended) and GUI
+
+ Debian: Ubuntu - 20.04,22.04,24.04[stable],26.04[latest] - Server OS - Personal/Production use - CLI(recommended) and GUI
+
+ Others: Centos, fedora, Kali Linux, Linux mint, Amazon Linux[2022, 2023], Susi linux, Selinux etc
+
+
+Server: Server is nothing but an machine(virtual server/machine, physical server/machine, instance, box etc) which
+provides functionality to use the features of operating system and application running inside it.
+
+
+Datacenter: Datacenter is an secure location/building/room which contains all the hardware like racks, servers, cameras, network devices(routers, switches etc), AC's, coolers etc 
+           
+
+Physical server: Physical server is one which can be accessed directly.
+                 Physical server has its own resources(cpu, ram, HD).
+
+Virtual server: Virtual server is one which can be accessed remotely or virtually.
+                Virtual server utilizes the resources of physical server.
+
+Scenario: 
+   1 laptop - 20k/4L
+   1 server - 5L/50L  - 1 lakhs servers - cost - crores ? 
+          * Companies cannot afford crores of infra cost ?  - They want infrastructure cost optimization?
+
+Virtualization: Virtualization is an mechanism which uses hypervisor software for creating virtual machines from physical machine.
+
+  eg: hypervisor software  - Oracle Virtual box
+                             VMware workstation
+                             HyperV
+                             Nitro Hypervisor
+                             Microsoft hypervisor
+
+
+Cloud: Cloud is an service provider who provides cloud computing services over the internet which can be accessed via
+web-browsers.
+       Cloud service provider provides services like IAAS(compute, network, storage etc), PAAS(frameworks for developers),
+SAAS(anything in the form of url) for various industries like ecommerce, software, banking, financial institutes, educational
+institutes, govt agencies, health care, insurance, social media etc
+   
+Scenario: 
+   Company: TCS
+   Client: Myntra
+   Contract: Website and infrastructure maintainence
+             Normal days: 10000 servers - budget/cost - monthly
+             Sales days: 30000 servers - 3 months budget/cost
+
+TCS raises an concern: What about rest 9 months? - loss for TCS
+
+   TCS datacenter: Initial setup - 10 crores
+                   Yearly maintainence - 1 crore
+       * Own/Rent datacenter
+       * Purchase hardware like racks, servers, network devices etc and also softwares etc
+       * Hardware engineer
+       * Labors: cleaning staff, electricains, security guards etc
+       * Backup power
+       * Internet connection
+       * AMC
+       * Disaster recovery - Redundant datacenter
+
+
+Cloud Service provider: We are service provider who provide services on "on-demand" request using pricing model "pay as you go" model.
+
+ TCS opts cloud model: Initial setup - 0
+                       Yearly billing - 70/80 lakhs
+
+       * No Own/Rent datacenter
+       * No Purchase hardware like racks, servers, network devices etc and also softwares etc
+       * No Hardware engineer
+       * No Labors: cleaning staff, electricains, security guards etc
+       * No Backup power
+       * Less Internet connection
+       * No AMC
+       * No Disaster recovery - Redundant datacenter
+      
+       * Skilled devops engineer with cloud knowledge
+===========================================================================================================
+Basic Linux commands:
+===========================================================================================================
+command --help
+man command
+=================================================================================================
+1. How to check operating system version?
+   command: cat /etc/os-release       // This command works in all linux flavours
+            cat /etc/redhat-release   // This command works in redhat OS 
+-----------------------------------------------------------------------------------------------
+2. How to check the date and time in system?
+   command: date
+
+-----------------------------------------------------------------------------------------------
+3. How to create an file in linux?
+   command: touch filename                          // create an empty file
+            touch file1 file2 file3 file4 
+--------------------------------------------------------------------------------------------------
+4. How to check the status of previous command?
+   command: echo  $?
+   0 - success
+   1 or above - failure
+
+   echo - print statement
+   $? - status of previous command
+
+--------------------------------------------------------------------------------------------------
+5. How to create an directory(folder) in linux?
+   command: mkdir dirname                 // make directory or create an directory
+            mkdir dirname1 dirname2 dirname2
+            mkdir -p dir1/dir2/dir3      // recursive - main directory and sub-directories
+
+--------------------------------------------------------------------------------------------------
+6. How to list the files and directories?
+   command: ls                               // listing the files and directories
+            ls -lrt                          // Detailed listing of the files and directories
+            ls -lRt                          // recursive detailed listing of files and directories
+
+regular file  permissions        links        user      group     size           date & time           filename
+-             rw-r--r--.           1         ec2-user ec2-user     0          May  8 04:46            file.txt
+
+directory     permissions        links        user      group     size           date & time           filename
+d             rwxr-xr-x.           2         ec2-user ec2-user     6          May  8 04:52            test-dir
+
+-l long
+-r sorting
+-t formatting 
+-R recursive
+
+----------------------------------------------------------------------------------------------------
+7. How to switch between directories ?
+   command: cd dirname                     // change directory - switch to directory
+            cd ..                          // one directory back
+            cd ../..                       // two directory back
+            cd                             // takes to home directory of logged in user
+            cd -                           // takes to previous location from where we switched 
+-----------------------------------------------------------------------------------------------
+8. How to check current path(location) where are  we located ?
+   command: pwd                // present working directory
+
+-----------------------------------------------------------------------------------------------
+9. Home directory: Tilde symbol  ~                // Indicates its an home directory of logged in user
+                                 $                // Indicates home directory of regular user
+                                 #                // Indicates home directory of root(super/admin) user
+                                 whoami           // which user is currently logged in
+
+
+--------------------------------------------------------------------------------------------------
+10. How to switch to regular user and root user account?
+    command: sudo su -  (OR) sudo su - root                  // switch to root user account
+             su - username                                   // switch to regular user account
+
+sudo - superuser do
+-----------------------------------------------------------------------------------------------------
+11. How to clear the screen?
+    command: clear
+
+----------------------------------------------------------------------------------------------------
+12. How to check activities performed in the system?
+    command: history
+
+---------------------------------------------------------------------------------------------------
+13 How to exit from user account and system?
+   command: exit
+
+[root@ip-172-31-92-235 ~]# exit
+logout
+[ec2-user@ip-172-31-92-235 ~]$ exit
+logout
+Connection to ec2-18-205-190-177.compute-1.amazonaws.com closed.
+~ $ 
+------------------------------------------------------------------------------------------------------
+14. How to write/edit/delete content inside the file?
+    command: vi/vim/nano filename                     // text editors
+
+----------------------------
+a. vi/vim text editor
+----------------------------
+eg: vi file.txt -> by default file opens in read-only mode
+                   insert mode: i button - write/delete/edit content
+                   read-only mode: esc button
+
+       Below options needs to run in read-only mode(esc button):
+           :w - save
+           :q - quit
+           :wq - save and quit
+
+           dd - delete an line
+           x  - delete an character
+           u  - undo/rollback in same session before save and quit
+
+Note: vi cheatsheet in google
+
+----------------------------
+b. nano text editor
+----------------------------
+eg: nano sample.txt -> by default file opens in write mode
+                    -> save -> ctrl o -> press enter
+                    -> quit -> ctrl x
+
+Note: yum install nano -y
+
+---------------------------------------------------------------------------------------------------------------------
+15. How to display the content of the file without opening the file?
+    command: cat filename
+
+---------------------------------------------------------------------------------------------------------------------
+16. Redirection operators: Redirections operations are used for redirecting the logs/content/outputs to the file from
+command/file.
+   
+    >  - override - First time it will add the content to the file
+                    Second time it will override(removes existing content and add new content)
+
+
+    >> - append  - First time it will add the content to the file
+                   Second time it will append(adds new content on top of existing content)
+
+eg: cat > file.txt
+    interactive mode> Type the content
+    interactive mode> Type the content  
+    interactive mode> save and quit -> ctrl d  -> press button
+
+
+eg: cat >> file.txt
+    interactive mode> Type the content
+    interactive mode> Type the content  
+    interactive mode> save and quit -> ctrl d  -> press button
+
+eg: ls -lrt > /opt/ls.out
+    date >> date.out
+    cat /etc/os-release > os.txt
+    yum install wget -y > yum.out
+
+---------------------------------------------------------------------------------------------------------------------
+17. How to remove files and directories?
+    command: rm filename                          // Remove file
+             rm -i filename                       // -i confirmation yes
+             rm -f filename                       // -f forcefully without confirmation
+
+             rmdir dirname                        // delete an empty directory
+             rm -rf dir1                          // remove directories recursively - main directory, sub directories and files
+             rm -rf *                             // * means all - it removes everything in current directory
+ 
+             rm -rf /app                          // remove app directory and its content
+             rm -rf /app/*                        // remove only content inside app directory but not app directory itself.
+
+Note: we dont have recycle bin in linux
+
+---------------------------------------------------------------------------------------------------------------------
+18. How to download the files and softwares from internet?
+    command: wget <URL>
+             curl -O <URL>
+
+eg: wget https://archives.jenkins-ci.org/redhat-stable/jenkins-2.528.3-1.1.noarch.rpm
+    curl -O https://pkg.jenkins.io/rpm/jenkins.repo
+
+Note: yum install wget -y
+=====================================================================================================================
+Filesystem:
+=====================================================================================================================
+Filesystem is an writable location which is used for storing the data into the disk.
+
+Window: Local disk - c:\drive - Program files
+                                Users
+                                Windows
+                                Apps
+                                Drivers
+
+Linux: boot disk - / or root filesystem
+                    - /root - home directory of root user
+                    - /home - home directory of regular users
+                    - /dev - devices
+                    - /opt - 3rd party softwares
+                    - /boot - kernal OS, initramfs etc
+                    - /mnt - temporary space for users
+                    - /tmp - temporary space for system
+                    - /var - logs, libraries, binaries etc
+                    - /etc - system configuration files
+                    - /bin - binaries - executables
+                    - /lib - libraries - system supporting files
+                    - /media - vidoes, images etc
+                    - /proc - cpu, ram resources info etc
+                    - /usr - unix resources(libraries, binaries etc - yum,rpm etc)
+
+
+Primary disk: boot disk - operating system - created when machine is launched.
+
+
+Secondary disk: Additional disk - data and application - Manually create the disk and attach.
+              * Create volume(disk)
+              * attach the volume to EC2 instance
+              * Partitioning - dividing disk into parts(4 parts)
+              * Formatting - raw disk - blocks(super, journal, inode etc) - byte-byte - binary language
+              * Filesystem creation - custom path - /app, /data, /opt/data etc
+              * Mounting - mapping volume with filesystem
+====================================================================================================================
+User Management:
+====================================================================================================================
+* Super/Admin user: root user - most priviledged - non restricted user
+                    uid - 0
+                    gid - 0
+                    FN/comment: Super user
+                    Home directory: /root
+                    Shell: /bin/bash 
+
+* System users: ping, bin, daemon, system etc - Interact with Kernel OS
+                    uid - 1-999
+                    gid - 1-999
+                    FN/comment:  ping, bin, daemon, system 
+                    Home directory: /ping, /bin, /daemon, /system 
+                    Shell: /sbin/nologin
+
+* Regular users: John, Smith, tomcat, sonar etc - least privileged user - restricted users
+                    uid - 1000 - soo on
+                    gid - 1000 - soo on
+                    FN/comment: John Ronald, Smith France, tomcat, sonar
+                    Home directory: /home/john, /home/smith, /home/tomcat, /home/sonar
+                    Shell: /bin/bash 
+
+--------------------------
+System configuration files:
+----------------------------
+1. /etc/passwd: This file contains all the user details except the password details.
+
+2. /etc/shadow: This file contains all the password details and password settings.
+
+3. /etc/group: This file contains all the group details and users assigned to group.
+
+----------------------------------------------------------------------
+commands:
+----------------------------------------------------------------------
+1. How to create an regular user?
+   command: useradd username
+   eg: useradd john
+
+----------------------------------------------------------------------
+2. How to set or reset the password?
+   command: passwd username
+   eg: passwd john
+
+[root@ip-172-31-32-238 ~]#  passwd john
+New password: 
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: 
+passwd: password updated successfully
+[root@ip-172-31-32-238 ~]#
+----------------------------------------------------------------------
+3. How to create an group?
+   command: groupadd groupname
+   eg: groupadd automation
+
+----------------------------------------------------------------------
+4. How to assign users to the group?
+   command: usermod -G groupname username 
+   eg: usermod -G automation john
+
+----------------------------------------------------------------------
+5. How to create an customized user?
+   command: useradd -d "home directory" -s "shell" -c "comment/FN"  username
+   eg: useradd -d "/home/francesmith" -s /bin/sh -c "France Smith" fsmith
+
+----------------------------------------------------------------------
+6. How to modify the user details?
+   command: usermod -d "home directory" -s "shell" -c "comment/FN"  username
+   eg: usermod -c "John Ronald" -s "/bin/sh" john
+
+Note: We can change all the user details except the username
+------------------------------------------------------------------------
+7. How to modify the password settings?   
+   command: chage -l            // list the options
+            chage -l username   // list the password settings
+            chage -M 90 fsmith  // Maximum number of days between password change
+            chage -W 3 fsmith   // Number of days of warning before password expires
+------------------------------------------------------------------------
+8. How to delete the user and group?
+   command: userdel username
+            groupdel groupname
+
+   eg: userdel fsmith
+       groupdel automation
+
+====================================================================================================================
+Delegate the sudo privileges to Regular user:
+====================================================================================================================
+/etc/sudoers: This file contains all the sudo privileges to perform root level activities without needing the
+password.
+
+              This file must be edited via visudo command.
+
+
+-----------------------
+visudo
+-----------------------
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+john    ALL=(ALL)       ALL
+harry   ALL=(ALL)       /usr/bin/yum, /usr/sbin/useradd
+
+To perform root level activities, we need to add "sudo" as prefix before any root level command.
+------------------------------------------------------------------------------------------
+case-1: Full Access to John user adding in visudo:  "john    ALL=(ALL)       ALL"
+------------------------------------------------------------------------------------------
+sudo useradd smith
+[sudo] password for john: 
+
+sudo yum install wget -y
+[sudo] password for john: 
+
+---------------------------------------------------------------------------------------------
+case-2: Limited Access to harry user adding in visudo:  "harry   ALL=(ALL)       /usr/bin/yum
+---------------------------------------------------------------------------------------------
+sudo yum install zip  -y
+[sudo] password for harry:
+
+
+[harry@ip-172-31-30-77 ~]$ sudo useradd kelly
+[sudo] password for harry: 
+Sorry, user harry is not allowed to execute '/sbin/useradd kelly' as root on ip-172-31-30-77.ec2.internal.
+[harry@ip-172-31-30-77 ~]$
+
+==============================================================================================================Package Management: Software Management
+==============================================================================================================
+Windows: .exe(executable) -> Double click -> Follow instructions 
+
+Linux:
+  Redhat: .rpm(redhat package manager) -> Execute commands -> rpm : Redhat package manager
+                                                              yum : Yellow dog update modifier 
+
+  Debian:  .deb(debian)  -> Execute commands -> apt: Advanced packaging tool
+           
+----------------------------------------------------------------------------------------------------------------
+1. RPM: Redhat package manager
+        RPM way of installation was started since earlier versions of linux and still we are making use of it.
+        RPM allows us to install/uninstall/upgrade package.
+        Using RPM, we can install one package at a time.
+        For RPM installation, we need to first download the package manually and then install it.
+        RPM doesn't resolve/download/install the dependent packages i.e we need to manually resolve/download/install
+dependent packages before actual package installation.
+        eg: httpd-2.4.1-1.1.el10.x86_64.rpm                 // Installing httpd package
+              Error: httpd-tools package not found
+                     httpd-tools-2.4.1-1.1.el10.x86_64.rpm       // Installing httpd-tools package
+                        Error: httpd-security package not found
+        RPM installations requires full package name and full package path at the time of installation.
+
+URL: https://archives.jenkins-ci.org/redhat-stable/
+
+commands: curl -O https://archives.jenkins-ci.org/redhat-stable/jenkins-2.528.1-1.1.noarch.rpm
+          rpm -ivh jenkins-2.528.1-1.1.noarch.rpm              // Install the package
+          rpm -qa                                              // List all installed packages
+          rpm -qa | grep -i jenkins                            // filter and list installed package
+          rpm -qi jenkins-2.528.1-1.1.noarch                   // query information
+          rpm -ql jenkins-2.528.1-1.1.noarch                   // query location
+
+          curl -O https://archives.jenkins-ci.org/redhat-stable/jenkins-2.528.3-1.1.noarch.rpm 
+          rpm -Uvh jenkins-2.528.3-1.1.noarch.rpm              // Upgrade the package
+          rpm -e jenkins-2.528.3-1.1.noarch                    // erase/uninstall/remove package
+
+-i install
+-v verbose(detailed output)
+-h hash formatting  - % of completion
+-q query
+-a all
+
+
+grep - filter - content/file/directory
+       -i case sensitive - filter in small/captial letters
+ | - pipe operator - forwards output of one command as input to another command
+----------------------------------------------------------------------------------------------------------------
+2: YUM: Yellow dog update modifier 
+        YUM way of installation was started since 5.x versions of linux and still we are making use of it.
+        YUM allows us to install/uninstall/upgrade package.
+        Using YUM, we can install more than one package at a time.
+        For YUM installation, we just need to install the package, yum will download the package at time of installation automatically.
+        YUM resolves/downloads/installs the dependent packages before the actual installation automatically.
+        YUM works using yum repositories which are under /etc/yum.repos.d -> *.repo files
+        YUM installation requires full package name at the time of installation is optional.
+
+------------------------------
+cd /etc/yum.repos.d
+------------------------------
+vi jenkins.repo
+------------------
+[jenkins]
+name=description
+baseurl/mirrorlist= URL where all packages are stored in online location
+enabled=0/1
+gpgchecks=0/1
+gpgkeys=/etc/cert/jenkins.key
+
+commands: yum install httpd -y                // Install latest version of package
+          yum install httpd-2.4* -y           // Install specific version of package
+          yum list                            // List all installed/uninstalled packages
+          yum list --installed                // List all installed packages
+          yum list --installed | grep -i httpd // filter and list installed package
+          yum upgrade httpd -y                // Upgrade package to latest version
+          yum update -y                       // Upgrade all package to latest version
+          yum remove httpd -y                 // remove/uninstall package
+
+-y confirmation yes/no
+
+eg: zip, wget, bind-utils, net-tools, at, java-21, nano etc
+    yum install wget zip at nano -y
+
+----------------------------------------------------------------------------------------------------------------
+3: APT - Advanced packaging tool
+         APT way of installation was started since earliers versions of linux and still we are making use of it.
+         APT allows us to install/uninstall/upgrade package.
+         Using APT, we can install more than one package at a time.
+         For APT installation, we just need to install the package, apt will download the package at time of installation automatically.
+         APT resolves/downloads/installs the dependent packages before the actual installation automatically.
+         APT works using apt repositories which are under /etc/apt/sources.list.d -> *.sources files
+         APT installation requires full package name at the time of installation is optional.
+
+---------------------------------
+cd /etc/apt/sources.list.d 
+---------------------------------
+vi ubuntu.sources
+---------------------------------
+Types: deb
+URIs: http://us-east-1.ec2.archive.ubuntu.com/ubuntu/
+Suites: resolute resolute-updates resolute-backports
+Components: main universe restricted multiverse
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+commands: apt install apache2 -y                 // Install latest version of package
+          apt install apache2-2.4* -y            // Install specific version of package
+          apt list                               // List all installed/uninstalled packages
+          apt list --installed                   // List all installed packages
+          apt list --installed | grep -i apache2 // filter and list installed package
+          apt upgrade apache2 -y                 // Upgrade package to latest version
+          apt update -y                          // Upgrade all package to latest version
+          apt remove apache2 -y                  // remove/uninstall package
+
+-y confirmation yes/no
+
+eg: zip, java, bind-utils etc
+    apt install zip -y
+==============================================================================================================
+Backup and Restore:
+==============================================================================================================
+Backups are taken on files, directories, packages, application logs, system logs, audit logs, configuration,
+system messages, images etc for future reference and also for any troubleshooting/debugging.
+Backups can be futher compressed in order to optimize the storage cost and also easily ship/transfer the compressed files to destination location.
+
+1. TAR: Tape archive
+        Tar is an linux utility which comes in-built in most of the operating system.
+        Using tar, we can take backups and future restore them as and when needed.
+        Backup recommended via Tar is within 10 GB.
+        Tar has extension as .tar(bundle) and .tar.gz(bundle + compression)
+
+
+syntax: tar [options] [output-file] [input files]
+
+------------------------------------------------------------------------
+commands:
+------------------------------------------------------------------------
+a. How to create/take backups without compression?
+   command: tar -cvf file.tar file1 file2 file3 file4
+            tar -cvf file.tar file*
+            tar -cvf file.tar *
+------------------------------------------------------------------------ 
+b. How to create/take backups with compression?
+   command: tar -cvzf file.tar.gz file1 file2 file3 file4
+            tar -cvzf file.tar.gz file*
+            tar -cvzf file.tar.gz *
+------------------------------------------------------------------------
+c. How to verify the backup?
+   command: tar -tvf file.tar.gz
+            tar -tvf file.tar
+------------------------------------------------------------------------
+d. How to extract/restore the backup?
+   command: tar -xvf file.tar.gz
+            tar -xvf file.tar
+
+
+-c create
+-v verbose
+-f force
+-z compression
+-x extract/restore
+-t verify/display
+-----------------------------------------------------------------------------------------------------------
+2. ZIP: Zip is an linux utility which comes as 3rd party software in most of the operating system.
+        Using Zip, we can take backups and future restore them as and when needed using unzip.
+        Backup recommended via zip is within 10 GB.
+        Zip has extension as .zip(bundle + compression)
+
+package: zip
+         yum install zip -y
+         apt install zip -y
+
+syntax: zip [options] [output-file] [input files]
+        unzip  [options] [output-file]
+
+-------------------------------------------------
+commands:
+-------------------------------------------------
+a. How to take/create backup?
+   command: zip -r file.zip file1 file2 file3 file4
+            zip -r file.zip file*
+            zip -r file.zip *
+
+[root@ip-172-31-17-202 ~]# zip -r file.zip *
+  adding: file1 (deflated 76%)
+  adding: file2 (deflated 76%)
+  adding: file3 (deflated 76%)
+  adding: file4 (deflated 76%)
+[root@ip-172-31-17-202 ~]# 
+-------------------------------------------------------
+b. How to extract/restore the backup?
+   command: unzip file.zip 
+
+[root@ip-172-31-17-202 ~]# unzip file.zip 
+Archive:  file.zip
+  inflating: file1                   
+  inflating: file2                   
+  inflating: file3                   
+  inflating: file4                   
+[root@ip-172-31-17-202 ~]# 
+--------------------------------------------------------------------------------------------------------
+3. DD: Device drivers to take backup of the entire disk.
+   
+   command: dd if=/dev/sda of=/dev/sdb
+
+dd - device drivers
+if - input file
+of - output file
+  
+===================================================================================================
+Permissions: 
+===================================================================================================
+Permissions are given on any object(file/directory/package/image etc) to users, groups and others to restrict or allow them to access those objects.
+
+read    :   r   - view only - content/file/directory
+write   :   w   - add/delete/modify - content/file/directory
+execute :   x   - run program/script
+
+read    :   r  - 4
+write   :   w  - 2
+execute :   x  - 1
+
+Least permission: 400
+Highest permission: 777
+
+Default permission file: 644
+user group others
+rw-  r--   r--
+420  400   400
+ 6    4     4
+
+Default permission directory: 755
+user   group   others
+rwx    r-x     r-x
+421    401     401
+ 7      5       5
+
+* Change Modification: Change modification is used for modifying the permissions on files/directories/package etc to provide allow or restrict users/groups/others to access those objects.
+
+  syntax: chmod [options] [permissions] [file/directory]
+
+  command: chmod 400 file.txt
+           chmod 444 file.txt
+           chmod 666 file.txt
+           chmod 777 file.txt
+
+           chmod u=r,g=r,o=r sample.txt
+           chmod u=rw,g=rw,o=rw sample.txt
+           chmod u=rwx,g=rwx,o=rwx sample.txt
+
+           chmod +x test.sh
+           chmod -x test.sh           
+
+           chmod 700 test-dir
+           chmod -R 777 dir1
+ 
+           chmod -R 400 *
+           chmod -R 400 /app
+           chmod -R 400 /app/* 
+
+-R recursive
+---------------------------------------------------------------------------------------------------
+* Change ownership: Change ownership is used for transferring the ownership of the files/directories etc to another user.
+
+  syntax: chown [options] [user]:[group] [file/directory]
+
+  command: chown john:john sample.txt
+           chown john:automation new-sample.txt
+           chown john:root file.txt
+           chown root:john sample-file.txt
+
+           chown john:john test-dir
+           chown -R john:john dir1
+    
+           chown -R john:john *
+           chown -R john:john /app
+           chown -R john:john /app/*
+===================================================================================================
+Advanced Linux commands:
+===================================================================================================
+1. How to check IP address of the machine?
+   command: ifconfig -a   
+            hostname -i
+
+Note: yum install net-tools bind-utils -y
+------------------------------------------------------------------------------------------
+2. How to check hostname of the machine?
+   command: hostname              // FQDN - Fully qualified domain name
+
+[root@ip-172-31-17-239 ~]# hostname
+ip-172-31-17-239.ec2.internal
+[root@ip-172-31-17-239 ~]# 
+-----------------------------------------------------------------------------------------
+3. How to check connectivity between/of the machines?
+   command: ping IPaddress/Hostname
+
+[root@ip-172-31-17-239 ~]# ping 172.31.17.239
+PING 172.31.17.239 (172.31.17.239) 56(84) bytes of data.
+64 bytes from 172.31.17.239: icmp_seq=1 ttl=64 time=0.036 ms       // hop - transmitts network packet
+64 bytes from 172.31.17.239: icmp_seq=2 ttl=64 time=0.040 ms
+64 bytes from 172.31.17.239: icmp_seq=3 ttl=64 time=0.051 ms
+64 bytes from 172.31.17.239: icmp_seq=4 ttl=64 time=0.049 ms
+64 bytes from 172.31.17.239: icmp_seq=5 ttl=64 time=0.041 ms
+64 bytes from 172.31.17.239: icmp_seq=6 ttl=64 time=0.043 ms
+64 bytes from 172.31.17.239: icmp_seq=7 ttl=64 time=0.044 ms
+^C
+--- 172.31.17.239 ping statistics ---
+7 packets transmitted, 7 received, 0% packet loss, time 6157ms
+rtt min/avg/max/mdev = 0.036/0.043/0.051/0.004 ms
+[root@ip-172-31-17-239 ~]# 
+-----------------------------------------------------------------------------------------
+4. How to check port numbers occupied in the machine?
+   command: netstat -ntulp
+
+-n numberic
+-t tcp
+-u udp
+-l listening
+-p program/pid
+
+eg: starting application with port 323 --> Error - port is already in use
+
+[root@ip-172-31-17-239 ~]# netstat -ntulp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1225/sshd: /usr/sbi 
+tcp6       0      0 :::22                   :::*                    LISTEN      1225/sshd: /usr/sbi 
+udp        0      0 127.0.0.1:323           0.0.0.0:*                           751/chronyd         
+udp6       0      0 ::1:323                 :::*                                751/chronyd         
+[root@ip-172-31-17-239 ~]# 
+-----------------------------------------------------------------------------------------
+5. How to check detailed info about running process in the machine?
+   command: ps -ef                   // all running process
+            ps -ef | grep -i chronyd
+
+[root@ip-172-31-17-239 ~]# ps -ef | grep -i chronyd
+chrony       751       1  0 04:34 ?        00:00:00 /usr/sbin/chronyd -F 2
+root        1555    1391  0 04:44 pts/1    00:00:00 grep --color=auto -i chronyd
+[root@ip-172-31-17-239 ~]# 
+
+-----------------------------------------------------------------------------------------
+6. How to stop the running process forcefully?
+   command: kill -9 pid
+
+[root@ip-172-31-17-239 ~]# kill -9 751
+[root@ip-172-31-17-239 ~]# ps -ef | grep -i chronyd
+root        1560    1391  0 04:45 pts/1    00:00:00 grep --color=auto -i chronyd
+[root@ip-172-31-17-239 ~]# netstat -ntulp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1225/sshd: /usr/sbi 
+tcp6       0      0 :::22                   :::*                    LISTEN      1225/sshd: /usr/sbi 
+[root@ip-172-31-17-239 ~]# 
+-----------------------------------------------------------------------------------------
+7. How to get IPaddress when hostname/URL is shared?
+   command: nslookup hostname/URL
+
+[root@ip-172-31-17-239 ~]# nslookup google.com
+Server:         172.31.0.2
+Address:        172.31.0.2#53
+
+Non-authoritative answer:
+Name:   google.com
+Address: 192.178.155.102
+[root@ip-172-31-17-239 ~]#
+
+[root@ip-172-31-17-239 ~]# nslookup ip-172-31-17-239.ec2.internal
+Server:         172.31.0.2
+Address:        172.31.0.2#53
+
+Non-authoritative answer:
+Name:   ip-172-31-17-239.ec2.internal
+Address: 172.31.17.239
+
+[root@ip-172-31-17-239 ~]# 
+
+-----------------------------------------------------------------------------------------
+8. How to check disk free space in the machine?
+   command: df -h         // checking disk free space
+
+Note: use% reaches above 80% or to 100%  - logins will fail in both GUI and CLI
+                                           logs will be captured in log files
+                                           data will be not written in .dat files
+
+  Solution: Reboot the machine from aws console.
+
+[root@ip-172-31-17-239 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme0n1p3  9.8G  1.9G  8.0G  19% /
+devtmpfs        418M     0  418M   0% /dev
+tmpfs           454M     0  454M   0% /dev/shm
+efivarfs        128K  3.1K  120K   3% /sys/firmware/efi/efivars
+tmpfs           182M  3.5M  178M   2% /run
+tmpfs           1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+/dev/nvme0n1p2  200M  8.7M  192M   5% /boot/efi
+tmpfs           1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs           1.0M     0  1.0M   0% /run/credentials/serial-getty@ttyS0.service
+tmpfs            91M  4.0K   91M   1% /run/user/1000
+[root@ip-172-31-17-239 ~]# 
+-----------------------------------------------------------------------------------------
+9. How to check disk utilization in the machine?
+   command: du -sh file/directory
+            du -sh  /
+            du -sh *
+
+du - disk usage
+-s size
+-h headers
+---------------------------------------------------------------------------------------------
+10. How to empty the file without deleting/editing/opening file?
+    command: echo > filename
+
+echo - print statement
+>  - override
+
+[root@ip-172-31-17-239 audit]# du -sh *
+44K     audit.log
+8.0K    audit.tar.gz
+[root@ip-172-31-17-239 audit]# echo > audit.log 
+[root@ip-172-31-17-239 audit]# du -sh *
+4.0K    audit.log
+8.0K    audit.tar.gz
+[root@ip-172-31-17-239 audit]# 
+
+-----------------------------------------------------------------------------------------------
+11. How to check cpu and ram details in the machine?
+    command: lscpu
+             cat /proc/cpuinfo
+
+             free -g/m/k
+             cat /proc/meminfo
+-g GB
+-m MB
+-k KB
+---------------------------------------------------------------------------------------------
+12. How to check, how long machine is up and running?
+                  how many users are logged in?
+                  load average in machine?
+    command: uptime                         // machine is running more than 365 days - reboot recommended.
+
+[root@ip-172-31-17-239 ~]# uptime
+ 05:03:20 up 28 min,  2 users,  load average: 0.00, 0.00, 0.00
+[root@ip-172-31-17-239 ~]# 
+---------------------------------------------------------------------------------------------
+13. How to check, How to check cpu and ram utilization?
+                  how long machine is up and running?
+                  how many users are logged in?
+                  load average in machine?
+    command: top
+top - 05:05:43 up 31 min,  2 users,  load average: 0.00, 0.00, 0.00
+Tasks: 115 total,   1 running, 114 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.2 us,  0.0 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.2 hi,  0.0 si,  0.0 st 
+MiB Mem :    907.0 total,    192.9 free,    430.2 used,    450.0 buff/cache     
+MiB Swap:      0.0 total,      0.0 free,      0.0 used.    476.8 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                         
+   1795 root      20   0    7664   5244   3124 R   0.3   0.6   0:00.05 top                                             
+      1 root      20   0   49956  41652  10392 S   0.0   4.5   0:02.53 systemd                                         
+      2 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kthreadd                                        
+      3 root      20   0       0      0      0 S   0.0   0.0   0:00.00 pool_workqueue_release                          
+      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R-rcu_gp                                
+      5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R-sync_wq                               
+      6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R-slub_flushwq                          
+      7 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R-netns                                 
+      9 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/0:0H-events_highpri                     
+     12 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R-mm_percpu_wq 
+---------------------------------------------------------------------------------------------
+14. How to check disks available/attached in the machine?
+    command: lsblk                // list the block list
+             fdisk -l             // disk management utility
+
+---------------------------------------------------------------------------------------------
+15. How to start/stop/restart/enable/disable and check the status of the service?
+    command: systemctl enable httpd           
+             systemctl disable httpd
+
+             systemctl start httpd
+             systemctl stop httpd
+
+             systemctl restart httpd
+             systemctl status httpd
+
+Note: yum install httpd -y
+---------------------------------------------------------------------------------------------
+16. How to copy the files from one location to another location?
+    syntax: cp [options] [src-location] [dest-location]
+   
+ command: cp file1 file2   // file2 doesn't exist, file2 will be created and then file1 contents are copied into file2
+                           // file2 exist, file1 contents will be copied into file2
+
+          cp -R dir1 dir2  // dir2 doesn't exist, dir2 will be created and then dir1 contents will be copied into dir2
+                           // dir2 exist, then dir1 itself will be copied into dir2
+
+          cp sample.txt dir2 
+ 
+          cp -R * /mnt
+
+          cp -R /mnt/* /opt
+
+-R recursive
+---------------------------------------------------------------------------------------------
+17. How to move or rename the file ?
+    syntax: mv [src-location] [dest-location]
+  
+    command: mv file1 file2           // file1 will be renamed as file2
+             mv dir1 dir2             // dir1 will be renamed as dir2
+
+             mv sample.txt dir2       // sample.txt is moved into dir2
+             
+             mv * /tmp  
+
+---------------------------------------------------------------------------------------------
+18. How to execute the command in background and also capture output of the command ?
+    command: nohup yum install java-21* -y  &
+
+    nohup - captures output of the command in nohup.out
+    &     - run command in background
+
+[root@ip-172-31-17-239 ~]# nohup yum install java-21* -y  &
+[1] 2346
+[root@ip-172-31-17-239 ~]# nohup: ignoring input and appending output to 'nohup.out'
+
+[root@ip-172-31-17-239 ~]# ps -ef | grep -i yum
+root        2346    1391 34 05:29 pts/1    00:00:03 /usr/bin/python3 -s /usr/bin/yum install java-21* -y
+root        2353    1391  0 05:29 pts/1    00:00:00 grep --color=auto -i yum
+[root@ip-172-31-17-239 ~]# ls -lrt
+total 36
+-rw-------. 1 root root 33377 May 15 05:29 nohup.out
+[root@ip-172-31-17-239 ~]# 
+[root@ip-172-31-17-239 ~]# 
+[1]+  Done                    nohup yum install java-21* -y
+[root@ip-172-31-17-239 ~]# 
+
+---------------------------------------------------------------------------------------------
+19. How to display the logs with required number of lines?
+    command: tail -10 /var/log/messages     // display 10 latest logs lines and exit from machine
+             tail -10f /var/log/messages    // display 10 latest logs lines and continue looking for new logs
+
+             head -10 /var/log/messages     // display 10 beginning logs lines and exit from machine
+
+
+---------------------------------------------------------------------------------------------
+20. How to check last reboot details in the system?
+    command: last reboot
+
+[root@ip-172-31-17-239 ~]# last reboot
+reboot   system boot  6.12.0-124.52.1. Fri May 15 05:32   still running
+reboot   system boot  6.12.0-124.52.1. Fri May 15 04:34 - 05:32  (00:57)
+
+wtmp begins Fri May 15 04:34:26 2026
+[root@ip-172-31-17-239 ~]#
+---------------------------------------------------------------------------------------------
+21. How to restart the machine?
+    command: reboot
+
+[root@ip-172-31-17-239 ~]# reboot
+
+Broadcast message from root@localhost on pts/1 (Fri 2026-05-15 05:32:04 UTC):
+
+The system will reboot now!
+
+[root@ip-172-31-17-239 ~]# Connection to ec2-13-221-127-149.compute-1.amazonaws.com closed by remote host.
+Connection to ec2-13-221-127-149.compute-1.amazonaws.com closed.
+~ $ 
+
+---------------------------------------------------------------------------------------------
+22. How to stop the machine from command line?
+    command: shutdown             // grace period of 1 min to safely stop machine
+             shutdown now         // immediate stop machine
+             shutdown -c          // stop the scheduled shutdown
+
+[root@ip-172-31-17-239 ~]# shutdown
+
+Broadcast message from root@ip-172-31-17-239.ec2.internal on pts/1 (Fri 2026-05-15 05:36:26 UTC):
+
+The system will power off at Fri 2026-05-15 05:37:26 UTC!
+
+Shutdown scheduled for Fri 2026-05-15 05:37:26 UTC, use 'shutdown -c' to cancel.
+[root@ip-172-31-17-239 ~]# date
+Fri May 15 05:36:29 UTC 2026
+[root@ip-172-31-17-239 ~]# shutdown -c
+
+Broadcast message from root@ip-172-31-17-239.ec2.internal on pts/1 (Fri 2026-05-15 05:36:37 UTC):
+
+System shutdown has been cancelled
+
+[root@ip-172-31-17-239 ~]# 
+[root@ip-172-31-17-239 ~]# 
+[root@ip-172-31-17-239 ~]# 
+[root@ip-172-31-17-239 ~]# shutdown now
+
+Broadcast message from root@ip-172-31-17-239.ec2.internal on pts/1 (Fri 2026-05-15 05:36:42 UTC):
+
+The system will power off now!
+
+[root@ip-172-31-17-239 ~]# Connection to ec2-13-221-127-149.compute-1.amazonaws.com closed by remote host.
+Connection to ec2-13-221-127-149.compute-1.amazonaws.com closed.
+~ $ 
+---------------------------------------------------------------------------------------------
+23. How to check binary location and configuration files location?
+    command: which binary                 // binary location
+             whereis binary               // binary location and its configuration files
+
+[root@ip-172-31-17-239 ~]# which httpd
+/usr/sbin/httpd
+[root@ip-172-31-17-239 ~]# whereis httpd
+httpd: /usr/sbin/httpd /usr/lib64/httpd /etc/httpd /usr/share/httpd /usr/share/man/man8/httpd.8.gz
+[root@ip-172-31-17-239 ~]# 
+
+=====================================================================================================================
+Links: 
+=====================================================================================================================
+Link is an pointer to the object(files/directories/packages/images etc) that allows users to access restricted objects.
+
+eg: original file: /root/aws
+    reference link file: /tmp/aws
+
+1. Soft link:  Soft link is used for preventing the objects from unnecessary deletion and also to allow users to 
+access restricted objects.
+               Soft link provides benefit of storage cost optimization as the reference link file doesn't occupy
+the space.
+               In soft link, Inode number is different for both original and reference link file.
+               In case, we delete the reference link file, there is no impact on original file
+               but, if we delete original file, there is an impact  on reference link file as the reference link
+file will be broken and users cannot access the data.
+
+Note: Inode number is the address of the object using which OS identifies the object.
+            
+
+eg: original file: transaction.txt
+    reference link file: user-transaction.txt
+
+syntax: ln -s <original-file> <reference-link-file>
+        unlink <reference-link-file>
+
+-s symbolic/soft link
+
+[root@ip-172-31-30-70 ~]# ls -lrt transaction.txt 
+-rw-r--r--. 1 root root 339 May 16 04:45 transaction.txt
+[root@ip-172-31-30-70 ~]# ls -lrt user-transaction.txt 
+lrwxrwxrwx. 1 root root 15 May 16 04:46 user-transaction.txt -> transaction.txt
+[root@ip-172-31-30-70 ~]# 
+
+
+[root@ip-172-31-30-70 ~]# du -sh transaction.txt 
+4.0K    transaction.txt
+[root@ip-172-31-30-70 ~]# du -sh user-transaction.txt 
+0       user-transaction.txt
+[root@ip-172-31-30-70 ~]# 
+
+[root@ip-172-31-30-70 ~]# ls -li transaction.txt 
+17878553 -rw-r--r--. 1 root root 339 May 16 04:45 transaction.txt
+[root@ip-172-31-30-70 ~]# ls -li user-transaction.txt 
+17878557 lrwxrwxrwx. 1 root root 15 May 16 04:46 user-transaction.txt -> transaction.txt
+[root@ip-172-31-30-70 ~]# 
+-----------------------------------------------------------------------------------------------------------------
+2. Hard link: Hard link is used for preventing the objects from unnecessary deletion and also to allow users to 
+access restricted objects.
+              Hard link doesn't provides benefit of storage cost optimization as the reference link file occupies
+the space because hard link treats reference link as a backup file.
+              In Hard link, Inode number is same for both original and reference link file.
+              In case, we delete the reference link file, there is no impact on original file
+              but, if we delete original file,  still there is an impact  on reference link file as the reference link file will act as backup file and users can still access the data with reference link file.
+
+Note: Inode number is the address of the object using which OS identifies the object.
+            
+
+eg: original file: transaction.txt
+    reference link file: user-transaction.txt
+
+syntax: ln <original-file> <reference-link-file>
+        unlink <reference-link-file>
+
+
+[root@ip-172-31-30-70 ~]# ls -lrt transaction.txt 
+-rw-r--r--. 2 root root 804 May 16 04:55 transaction.txt
+[root@ip-172-31-30-70 ~]# ls -lrt user-transaction.txt 
+-rw-r--r--. 2 root root 804 May 16 04:55 user-transaction.txt
+[root@ip-172-31-30-70 ~]# 
+
+[root@ip-172-31-30-70 ~]# du -sh transaction.txt 
+4.0K    transaction.txt
+[root@ip-172-31-30-70 ~]# du -sh user-transaction.txt 
+4.0K    user-transaction.txt
+[root@ip-172-31-30-70 ~]# 
+
+
+[root@ip-172-31-30-70 ~]# ls -li transaction.txt 
+17878553 -rw-r--r--. 2 root root 804 May 16 04:55 transaction.txt
+[root@ip-172-31-30-70 ~]# ls -li user-transaction.txt 
+17878553 -rw-r--r--. 2 root root 804 May 16 04:55 user-transaction.txt
+[root@ip-172-31-30-70 ~]# 
+
+=====================================================================================================================
+Automation of Jobs: Timer based jobs which are executed at scheduled time.
+=====================================================================================================================
+1. AT job: AT job is used for performing one time activity job  at scheduled time.
+           Once AT job is executed it won't execute untill we reschedule it.
+
+eg: urgent reboot required on all non production servers at 10:00 AM
+    cleanup activity on prod machines for sunset customers on sun 11:00 AM
+
+Package: at
+         yum install at -y
+         systemctl start atd.service
+         systemctl status atd.service
+
+-----------------------------------------------------
+commands:
+-----------------------------------------------------
+a. How to schedule an job?
+   command: at 10:00 AM sun
+   interactive mode> Type the commands
+   interactive mode> Type the commands
+   interactive mode> ctrl d - save and quit
+
+output: Job id - 1/2/3/4..... 10:00 AM sun
+
+[root@ip-172-31-30-70 ~]# at 10:00 AM sun
+warning: commands will be executed using /bin/sh
+at Sun May 17 10:00:00 2026
+at> yum install java-21* -y >> /opt/10-00-AM-job.txt
+at> rm -rf /tmp/* 
+at> <EOT>
+job 1 at Sun May 17 10:00:00 2026
+[root@ip-172-31-30-70 ~]# 
+
+[root@ip-172-31-30-70 ~]# at 5:12 AM 
+warning: commands will be executed using /bin/sh
+at Sat May 16 05:12:00 2026
+at> yum install wget zip nano -y
+at> cd /opt && touch f1 f2 f3 f4
+at> <EOT>
+job 2 at Sat May 16 05:12:00 2026
+[root@ip-172-31-30-70 ~]#
+----------------------------------------------------
+b. How to list the scheduled jobs?
+   command: atq 
+
+-----------------------------------------------------
+c. How to check the detailed info about the scheduled jobs?
+   command: at -c job_id
+
+---------------------------------------------------------
+d. How to delete the scheduled jobs?
+   command: atrm job_id
+
+--------------------------------------------------------------------------------------------------------------------
+2. Crontab: Crontab is used for repetative activities which performs the execution at scheduled time.
+
+ eg: daily 10:00 AM backup of application data to perform new deployment.
+     Update the system at 7:00 AM from monday to friday "yum update -y"
+
+commands: crontab -l                 // list all cron jobs
+          crontab -e                 // edit the crontab for adding/deleting/updating the cron jobs
+          crontab -r                 // delete all jobs
+
+cron job: <cron expression> <command/script>
+
+cron expression: * * * * *
+   *  - minutes(0-59) - highest precedence
+   *  - Hours(0-23)
+   *  - day of the month(1-31)
+   *  - months(1-12)
+   *  - day of the week(0-7) - 0 and 7 is sunday
+
+* Every minute execute the script "bash /opt/healthcheck.sh" to check the health of the services.
+
+  * * * * * bash /opt/healthcheck.sh
+
+
+* Every 10 minute execute the script "bash /opt/healthcheck.sh" to check the health of the services.
+
+  */10 * * * * bash /opt/healthcheck.sh
+
+* At 10:30 am execute the script "bash /opt/healthcheck.sh" to check the health of the services.
+
+  30 10 * * * bash /opt/healthcheck.sh
+
+*  Update the system at 7:00 AM "yum update -y"
+    
+   * 7 * * * yum update -y 
+
+*  Update the system at 7:00 PM "yum update -y"
+    
+   * 19 * * * yum update -y
+
+
+*  Update the system at 7:30 PM from monday to friday "yum update -y"
+    
+   * 19 * * 1-5 yum update -y
+
+
+*  Update the system at 7:30 PM from monday and friday "yum update -y"
+    
+   * 19 * * 1,5 yum update -y
+
+
+*  Update the system at 7:30 PM from monday to friday in month of jan, april, july and dec "yum update -y"
+    
+   * 19 * 1,4,7,12 1,5 yum update -y
+
+
+
+examaples :
+
+ 1. Take an backup every 15 minutes:
+
+*/15 * * * *
+
+2. Schedule a cron to execute twice a day.
+
+0 5,17 * * * 
+
+
+3. Schedule a cron to execute every minute.
+* * * * *
+
+4.Schedule a cron to execute every Sunday at 5 PM.
+0 17 * * sun 
+
+5. Schedule a cron to execute every 10 minutes.
+*/10 * * * * 
+
+6.Schedule a cron to execute on selected months.
+* * * jan,may,aug * 
+
+7.Schedule a cron to execute on selected days.
+0 17 * * sun,fri  
+
+8.Schedule a cron to execute every four hours.
+0 */4 * * *
+
+9.Schedule a cron to execute twice every Sunday and Monday.
+0 4,17 * * sun,mon
+
+10.Schedule a cron to execute every 30 Seconds.
+* * * * *  sleep 30;
+
+11.Schedule tasks to execute yearly
+@yearly
+
+12.Schedule tasks to execute monthly ( @monthly ).
+@monthly 
+
+13.Schedule tasks to execute Weekly ( @weekly ).
+@weekly 
+
+14. Schedule tasks to execute daily ( @daily ).
+
+@daily
+
+15.Schedule tasks to execute on system reboot ( @reboot ).
+@reboot
+
+---------------------------------
+To check logs of crontab:
+---------------------------------
+journalctl /usr/sbin/crond | tail -n 1000
+
+[root@ip-172-31-30-70 ~]# journalctl /usr/sbin/crond | tail -n 1000
+May 16 04:37:30 ip-172-31-30-70.ec2.internal crond[1234]: (CRON) STARTUP (1.7.0)
+May 16 04:37:30 ip-172-31-30-70.ec2.internal crond[1234]: (CRON) INFO (Syslog will be used instead of sendmail.)
+May 16 04:37:30 ip-172-31-30-70.ec2.internal crond[1234]: (CRON) INFO (RANDOM_DELAY will be scaled with factor 29% if used.)
+May 16 04:37:30 ip-172-31-30-70.ec2.internal crond[1234]: (CRON) INFO (running with inotify support)
+May 16 05:01:01 ip-172-31-30-70.ec2.internal CROND[1511]: (root) CMD (run-parts /etc/cron.hourly)
+May 16 05:25:01 ip-172-31-30-70.ec2.internal CROND[1793]: (root) CMD (yum update -y >> yum.out)
+May 16 05:25:01 ip-172-31-30-70.ec2.internal CROND[1794]: (root) CMD (ls -lrt /opt >> ls.out)
+May 16 05:25:01 ip-172-31-30-70.ec2.internal CROND[1772]: (root) CMDEND (ls -lrt /opt >> ls.out)
+May 16 05:26:01 ip-172-31-30-70.ec2.internal CROND[11854]: (root) CMD (ls -lrt /opt >> ls.out)
+May 16 05:26:02 ip-172-31-30-70.ec2.internal CROND[11852]: (root) CMDEND (ls -lrt /opt >> ls.out)
+May 16 05:26:07 ip-172-31-30-70.ec2.internal CROND[1771]: (root) CMDEND (yum update -y >> yum.out)
+[root@ip-172-31-30-70 ~]# 
+
+=====================================================================================================================
+
+
+
+
+
+
+
+
+
+
